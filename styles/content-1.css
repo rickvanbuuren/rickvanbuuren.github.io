@@ -1,0 +1,32 @@
+.content-1{
+    width: 100%;
+    background-color: #cccccc;
+    font-family: roboto, Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    padding: 40px 30px 40px 30px;
+}
+.content-1 div div p{
+    font-size: 17px;
+}
+.img-positioner{
+    padding-top: 25%; /* forces 1:1 aspect ratio */
+}
+.img-container{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align:center; /* Align center inline elements */
+    font: 0/0 a;
+}
+.img-container:before{
+    content: ' ';
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+}
+.img-container img{
+    vertical-align: middle;
+    display: inline-block;
+}
