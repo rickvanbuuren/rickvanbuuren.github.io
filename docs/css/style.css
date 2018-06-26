@@ -1,0 +1,124 @@
+html, body {
+    background-color: #70CF51;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow:hidden;
+    margin:0px; padding:0px;
+    /* background-image: url('../images/bg.png'); */
+    background-color: black;
+    background-size: cover;
+}
+
+body * {
+    position: absolute;
+    display: block;
+    margin:0px; padding:0px;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+}
+@-webkit-keyframes fadeOut {
+    0% {opacity: 1;}
+    100% {opacity: 0;}
+ }
+ 
+ @keyframes fadeOut {
+    0% {opacity: 1;}
+    100% {opacity: 0;}
+ }
+
+ .fadeOut {
+    -webkit-animation-name: fadeOut;
+    animation-name: fadeOut;
+ }
+
+dead {
+	width:50px; min-height:50px;
+    background-image: url('../images/dead.png');
+    -webkit-animation-duration: 10s;animation-duration: 10s;
+    -webkit-animation-fill-mode: both;animation-fill-mode: both;
+    -webkit-animation-name: fadeOut;
+    animation-name: fadeOut;
+}
+buttonPlay, buttonBack {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+buttonBack::after{
+    content: "Back";
+}
+
+buttonPlay::after{
+    content: "Play";
+}
+
+
+button5:hover {
+    background-color: #555555;
+    color: white;
+}
+
+wonBackground {
+    width: 300px; height: 241px;
+    background-image: url('../images/wongame.png')
+}
+
+gameoverBackground {
+    width: 300px; height: 241px;
+    background-image: url('../images/Game_Over.jpg')
+}
+
+menuBackground {
+    width: 300px; height: 241px;
+    background-image: url('../images/Menuimage.png')
+}
+
+screenborder {
+    width: 277px; height: 800px;
+    background-color: black;
+}
+
+water {
+	width:672px; min-height:342px;
+	background-image: url('../images/water.png');
+}
+
+top {
+	width:672px; min-height:57px;
+	background-image: url('../images/top.png');
+}
+
+pinkcar {
+	width:58px; min-height:50px;
+	background-image: url('../images/pinkcar.png');
+}
+
+whitecar {
+	width:58px; min-height:50px;
+	background-image: url('../images/car.png');
+}
+
+Road_1 {
+	width:672px; min-height:57px;
+	background-image: url('../images/road_1.png');
+}
+
+path {
+	width:672px; min-height:57px;
+	background-image: url('../images/Path.png');
+}
+
+frog {
+	width:34px; min-height:46px;
+	background-image: url('../images/frog.png');
+}
+
