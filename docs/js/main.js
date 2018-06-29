@@ -10,10 +10,10 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 var Tree = (function () {
-    function Tree(x, y) {
+    function Tree(x, y, speed) {
         this._div = document.createElement("tree");
         document.body.appendChild(this._div);
-        this.speed = Math.random() * 4 + 1;
+        this.speed = speed;
         this.width = 277;
         this.height = 50;
         this.x = x;
@@ -172,6 +172,11 @@ var UIelement = (function () {
 }());
 var Dead = (function () {
     function Dead(x, y) {
+        this.sound = new Howl({
+            src: "./sounds/sound-frogger-squash.wav",
+            loop: false,
+            volume: 1.0
+        });
         this._div = document.createElement("dead");
         document.body.appendChild(this._div);
         this.width = 50;
@@ -179,6 +184,7 @@ var Dead = (function () {
         this.x = x;
         this.y = y;
         this._div.style.transform = "translate(" + this.x + "px, " + this.y + "px) ";
+        this.sound.play();
     }
     Object.defineProperty(Dead.prototype, "div", {
         get: function () {
@@ -192,6 +198,11 @@ var Dead = (function () {
 var Frog = (function () {
     function Frog(x, y) {
         var _this = this;
+        this.sound = new Howl({
+            src: "./sounds/sound-frogger-hop.wav",
+            loop: false,
+            volume: 1.0
+        });
         this._div = document.createElement("frog");
         document.body.appendChild(this._div);
         this._lifes = 3;
@@ -202,7 +213,7 @@ var Frog = (function () {
         this.xspeed = 30;
         this.yspeed = 57;
         this._div.style.transform = "translate(" + this.x + "px, " + this.y + "px) rotate(270deg)";
-        document.body.addEventListener('keydown', function () { return _this.move(event, KeyboardEvent); });
+        document.body.addEventListener('keyup', function () { return _this.move(event, KeyboardEvent); });
     }
     Object.defineProperty(Frog.prototype, "div", {
         get: function () {
@@ -223,9 +234,9 @@ var Frog = (function () {
         if (code === 38) {
             this.y -= this.yspeed;
             this._div.style.transform = "translate(" + this.x + "px, " + this.y + "px) rotate(270deg)";
+            this.sound.play();
         }
         else if (code === 40) {
-            console.log(this.y);
             if (this.y > 733) {
                 this.y += 0;
             }
@@ -233,14 +244,17 @@ var Frog = (function () {
                 this.y += this.yspeed;
             }
             this._div.style.transform = "translate(" + this.x + "px, " + this.y + "px) rotate(90deg)";
+            this.sound.play();
         }
         else if (code === 37) {
             this.x = Math.max(109, this.x - this.xspeed);
             this._div.style.transform = "translate(" + this.x + "px, " + this.y + "px) rotate(180deg)";
+            this.sound.play();
         }
         else if (code === 39) {
             this.x = Math.min(735, this.x + this.xspeed);
             this._div.style.transform = "translate(" + this.x + "px, " + this.y + "px) rotate(0deg)";
+            this.sound.play();
         }
     };
     Frog.prototype.getRectangle = function () {
@@ -257,6 +271,11 @@ var GameScreen = (function (_super) {
     __extends(GameScreen, _super);
     function GameScreen(game) {
         var _this = _super.call(this, game) || this;
+        _this.backgrounsMusic = new Howl({
+            src: "./sounds/FroggerFix.mp3",
+            loop: true,
+            volume: 0.8
+        });
         _this.gameover = false;
         _this.trees = new Array();
         _this.roads = new Array();
@@ -265,11 +284,24 @@ var GameScreen = (function (_super) {
         _this.water = new Water(100, 105, 672, 342);
         _this.top = new Top(100, 105, 672, 57);
         _this.fps = 60;
+        _this.backgrounsMusic.play();
         for (var i = 0; i < 3; i++) {
             _this.lives.push(new LiveUI(100 + (i * 45), 850));
         }
-        for (var i = 0; i < 5; i++) {
-            _this.trees.push(new Tree(0, 165 + (57 * i)));
+        var count = 0;
+        var previousSpeed = 0;
+        for (var i = 0; i < 10; i++) {
+            var x = -377;
+            var y = 165 + (57 * count);
+            var speed = Math.random() * 4 + 1;
+            if (i % 2 == 0) {
+                x = 0;
+                previousSpeed = speed;
+            }
+            if (i % 2 == 1) {
+                count++;
+            }
+            _this.trees.push(new Tree(x, y, previousSpeed));
         }
         _this.path = new Path(100, 445, 672, 57);
         for (var i = 0; i < 4; i++) {
@@ -320,7 +352,7 @@ var GameScreen = (function (_super) {
                 this.removeFromArray();
             }
         }
-        if (this.frog.y < 160) {
+        if (this.frog.y == 163) {
             this.switchScreen("wonScreen");
         }
     };
@@ -346,6 +378,7 @@ var GameScreen = (function (_super) {
     };
     GameScreen.prototype.gameOver = function () {
         if (this.lives.length == 0) {
+            this.backgrounsMusic.stop();
             this.switchScreen("endScreen");
         }
     };

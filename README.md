@@ -7,7 +7,7 @@ op de boomstammen moeten springen.
 
 
 **Op het moment is het spel alleen speelbaar op Google Chrome.**
-**Demo op:** [Sketch Runner](https://rickvanbuuren.github.io/froggy/)
+**Demo op:** [Froggy](https://rickvanbuuren.github.io/docs/)
 
 #### Checklist
 - [x] De code van het individuele project staat op GitHub.
@@ -219,4 +219,4 @@ De snelheid en het uiterlijk van de auto wordt hier veranderd.
 
 #### Peer review
 Link naar peer review:
-[Dion Pisas](https://github.com/AdriaanGiel/sketch_runner/blob/master/Peer_Review_Dion_Pisas.md)
+[Adriaan Giel](https://github.com/rickvanbuuren/froggy/blob/master/Peer_Review_Adriaan_Giel.md)

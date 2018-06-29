@@ -1,6 +1,7 @@
 class GameScreen extends Scene{
     
     private trees:Array<Tree>;
+    private secondTreeLine:Array<Tree>;
     private roads:Array<Road>;
     private cars:Array<Car>;
     private lives:Array<UIelement>;
@@ -13,6 +14,13 @@ class GameScreen extends Scene{
     private border:ScreenBorder
     private fps:number;
     private gameover:Boolean;
+
+    private backgrounsMusic:any = new Howl({
+        src: "./sounds/FroggerFix.mp3",
+        loop: true,
+        volume: 0.8
+    });
+
 
     constructor(game:Game){
         super(game)
@@ -28,15 +36,31 @@ class GameScreen extends Scene{
 
         this.fps = 60;
 
+        this.backgrounsMusic.play();
+
         for(let i = 0; i < 3; i++){
             this.lives.push(new LiveUI(100 + (i * 45), 850))
         }
 
-        for(let i = 0; i < 5; i++){
-            this.trees.push(new Tree(0,165 + (57 * i)));
+        let count = 0;
+        let previousSpeed = 0;
+        for(let i = 0; i < 10; i++){
+            let x = -377;
+            let y = 165 + (57 * count)
+            let speed = Math.random() * 4 + 1;
+
+            if(i%2==0){
+                x = 0;
+                previousSpeed = speed
+            }
+            if(i%2==1){
+                count++
+            }
+            this.trees.push(new Tree(x,y, previousSpeed));
         }
 
         this.path = new Path(100, 445, 672, 57);
+
         for(let i = 0; i < 4; i++){
             this.roads.push(new Road(100, 445 + 57 + 57 + (57 * i), 672, 57));
         }
@@ -58,7 +82,7 @@ class GameScreen extends Scene{
 
     public update(){
         let hitswater = this.checkCollision(this.water.getRectangle(), this.frog.getRectangle())
-        
+
         if(hitswater){
             let die = true
             for(let t of this.trees){
@@ -89,12 +113,11 @@ class GameScreen extends Scene{
             if(this.checkCollision(c.getRectangle(), this.frog.getRectangle())){
                 this.dead = new Dead(this.frog.x, this.frog.y);
                 this.frog.setBegin();
-                
                 this.removeFromArray();
             }    
         }
 
-        if(this.frog.y < 160){
+        if(this.frog.y == 163){
             this.switchScreen("wonScreen")
         }
     }
@@ -121,6 +144,7 @@ class GameScreen extends Scene{
 
     private gameOver():void{
         if(this.lives.length == 0){
+            this.backgrounsMusic.stop();
             this.switchScreen("endScreen")
         }
     }
